@@ -9,6 +9,7 @@ class RecurringJob:
     minfactor = None
     last_start = None
     job = None
+    priority_bonus = 0
 
     def __init__(self, job_id, name, period, minfactor=5):
         self.job_id = job_id
@@ -40,4 +41,17 @@ class RecurringJob:
         return self.last_start + timedelta(days=self.period)
 
     def get_priority(self):
+        return self.get_base_priority() + self.priority_bonus
+
+    def set_priority_bonus(self, bonus):
+        self.priority_bonus = bonus
+
+    def get_base_priority(self):
         return self.job.get_priority()
+
+    def get_priority_bonus(self):
+        return self.priority_bonus
+
+    @staticmethod
+    def has_deadline():
+        return False

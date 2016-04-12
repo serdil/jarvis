@@ -7,6 +7,7 @@ class RegularJob:
     start = None
     deadline = None
     minfactor = None
+    priority_bonus = 0
 
     def __init__(self, job_id, name, deadline, minfactor=10):
         self.job_id = job_id
@@ -28,6 +29,12 @@ class RegularJob:
         return False
 
     def get_priority(self):
+        return self.get_base_priority() + self.priority_bonus
+
+    def set_priority_bonus(self, bonus):
+        self.priority_bonus = bonus
+
+    def get_base_priority(self):
         elapsed_days = self.days_since_start()
         remaining_days = self.days_till_deadline()
         return float(self.duration_factor()) * elapsed_days / remaining_days
@@ -49,6 +56,16 @@ class RegularJob:
 
     def job_timeframe(self):
         return (self.deadline - self.start).days
+
+    def get_priority_bonus(self):
+        return self.priority_bonus
+
+    @staticmethod
+    def has_deadline():
+        return True
+
+    def is_urgent(self):
+        return self.days_till_deadline() <= 2
 
     @staticmethod
     def make_sure_at_least_one(val):

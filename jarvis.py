@@ -27,6 +27,8 @@ def process_inputs(inputs, jobs_manager):
         validate_and_finish_job(inputs, jobs_manager)
     elif command == "remove":
         validate_and_remove_job(inputs, jobs_manager)
+    elif command == "addbonus":
+        validate_and_add_bonus_to_job(inputs, jobs_manager)
     else:
         print_invalid_command_message()
 
@@ -142,6 +144,13 @@ def validate_and_remove_job(inputs, jobs_manager):
         print_invalid_command_message()
     else:
         jobs_manager.remove_job(int(inputs[1]))
+
+
+def validate_and_add_bonus_to_job(inputs, jobs_manager):
+    if len(inputs) < 3 or not is_valid_int(inputs[1]) or not is_valid_int(inputs[2]):
+        print_invalid_command_message()
+    else:
+        jobs_manager.add_bonus_to_job(int(inputs[1]), int(inputs[2]))
 
 
 def print_invalid_command_message():

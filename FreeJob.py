@@ -6,6 +6,7 @@ class FreeJob:
     name = None
     start = None
     recurring = None
+    priority_bonus = 0
 
     def __init__(self, job_id, name, recurring=False):
         self.job_id = job_id
@@ -29,11 +30,20 @@ class FreeJob:
         self.start = date.today()
 
     def get_priority(self):
+        return self.get_base_priority() + self.priority_bonus
+
+    def set_priority_bonus(self, bonus):
+        self.priority_bonus = bonus
+
+    def get_base_priority(self):
         return self.days_since_start()
 
     def days_since_start(self):
         days = (date.today() - self.start).days
         return self.make_sure_not_zero(days)
+
+    def get_priority_bonus(self):
+        return self.priority_bonus
 
     @staticmethod
     def make_sure_not_zero(val):
@@ -41,3 +51,7 @@ class FreeJob:
             return 1
         else:
             return val
+
+    @staticmethod
+    def has_deadline():
+        return False
