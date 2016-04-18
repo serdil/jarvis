@@ -29,6 +29,8 @@ def process_inputs(inputs, jobs_manager):
         validate_and_remove_job(inputs, jobs_manager)
     elif command == "addbonus":
         validate_and_add_bonus_to_job(inputs, jobs_manager)
+    elif command == "onebyone":
+        list_jobs_one_by_one(jobs_manager)
     else:
         print_invalid_command_message()
 
@@ -36,6 +38,13 @@ def process_inputs(inputs, jobs_manager):
 def persist_and_exit_program(jobs_manager):
     persistence.persist_jobs_manager(jobs_manager)
     sys.exit()
+
+
+def list_jobs_one_by_one(jobs_manager):
+    for job in jobs_as_strings(jobs_manager):
+        input()
+        print("\n\n\n")
+        print(job)
 
 
 def print_jobs(jobs_manager):
